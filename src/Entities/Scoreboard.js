@@ -4,65 +4,72 @@ import ui.TextView;
 
 exports = Class(ui.TextView, function (supr) {
 
-	var textPadding = 30, score = 0, currentScore = 0;
+	var textPadding = 30, score = 0, currentScore = 0, frame = 0;
 
 	this.init = function (opts) {
 
 		opts = merge(opts, {
 
-			superview: this,
-			x: textPadding,
-			y: 15,
-			width: device.width - textPadding * 2,
-			height: 300,
-			autoSize: false,
-			autoFontSize: true,
-			size: 300,
 			verticalAlign: 'top',
-			horizontalAlign: 'center',
+			autoSize: false,
+			textAutoSize: true,
+			height: 500,
+			color: '#FFFFFF',
+			width: device.width - textPadding * 2,
+			size: 100,
 			wrap: false,
-			color: '#FFFFFF'
+			text: '01',
+			x: textPadding,
+			y: 10,
+			strokeWidth: 10,
+			strokeColor: "rgba(0,0,0,0.1)",
+			horizontalAlign: 'right',
 
 		});
 
 		supr(this, 'init', [opts]);
 
-		this.build(opts.character);
+		this.text = 0;
 
 	};
 
-	this.updateScore = function(increaseBy) {
+	this.tick = function (dt) {
 
-		var targetScore = score + increaseBy;
+		// this.setText(this.text);
 
-		var scoreIncriment = (increaseBy > 999) ? increaseBy / 500 : 1 ;
+		// console.log(this.getSuperview().score);
+  		
+  		// this.newScore = this.getSuperview().score;
+
+  		// if (this.newScore === 0) {
+
+  		// 	this.setText('0');
+
+  		// } else if (this.score != this.newScore) {
+
+  		// 	// this.updateScore(this.newScore - this.updateScore);
+  		// 	// this.updateScore(this.newScore);
+  		// 	this.score = this.newScore;
+  		// 	this.setText(this.score);
+
+  		// }
+	};
+
+	this.updateScore = function(target) {
+
+		this.i = 1 ;
 
 		var timeIncrement = 1000 / increaseBy;
-
 		var scoreTimer = setInterval(bind(this, function () {
 
 			if(currentScore < targetScore) {
-
 				currentScore += Math.round(scoreIncriment);
-
 				this.setText(currentScore);
-
 			} else {
-
 				score = currentScore;
-
 				clearInterval(scoreTimer);
-
 			}
-
 		}), timeIncrement);
-
 	}
-
-	this.build = function(character) {
-
-		this.setText(0);
-
-	};
 
 });

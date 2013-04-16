@@ -1,50 +1,92 @@
-/*
- * The title screen consists of a background image and a
- * start button. When this button is pressed, and event is
- * emitted to itself, which is listened for in the top-level
- * application. When that happens, the title screen is removed,
- * and the game screen shown.
- */
+import device math.util as math;
 
-import ui.View;
-import ui.ImageView;
+import ui.View, ui.ImageView, ui.TextView;
 
-/* The title screen is added to the scene graph when it becomes
- * a child of the main application. When this class is instantiated,
- * it adds the start button as a child.
- */
 exports = Class(ui.ImageView, function (supr) {
-	// this.init = function (opts) {
-	// 	opts = merge(opts, {
-	// 		x: 0,
-	// 		y: 0,
-	// 		image: "resources/images/title_screen.png"
-	// 	});
 
-	// 	supr(this, 'init', [opts]);
+	this.init = function (opts) {
 
-	// 	this.build();
-	// };
+		opts = merge(opts, {
 
-	// this.build = function() {
-	// 	/* Since the start button is a part the background image,
-	// 	 * we just need to create and position an overlay view that
-	// 	 * will register input events and act as button.
-	// 	 */
-	// 	var startbutton = new ui.View({
-	// 		superview: this,
-	// 		x: 58,
-	// 		y: 313,
-	// 		width: 200,
-	// 		height: 100
-	// 	});
+			image: "resources/images/results.png"
 
-	// 	/* Listening for a touch or click event, and will dispatch a
-	// 	 * custom event to the title screen, which is listened for in
-	// 	 * the top-level application file.
-	// 	 */
-	// 	startbutton.on('InputSelect', bind(this, function () {
-	// 		this.emit('titlescreen:start');
-	// 	}));
-	// };
+		});
+
+		supr(this, 'init', [opts]);
+
+		this.build();
+
+	};
+
+	this.build = function() {
+
+		var restartbutton = new ui.View({
+
+			superview: this,
+			x: 42,
+			y: 414,
+			width: 300,
+			height: 147,
+			// backgroundColor: 'rgba(0,225,0,0.5)',
+
+		});
+
+		var menubutton = new ui.View({
+
+			superview: this,
+			x: 128,
+			y: 573,
+			width: 120,
+			height: 72,
+			backgroundColor: 'rgba(225,0,0,0.5)',
+
+		});
+
+		this.headline = new ui.TextView({
+
+			superview: this,
+			x: 50,
+			y: 90,
+			width: 1000,
+			height: 300,
+			size: 260,
+			fontFamily: "Amatic",
+			wrap: true,
+			autoFontSize: true,
+			anchorX: 0,
+			anchorY: 0,
+			r: -0.04,
+			lineHeight: 0.9,
+
+		});
+
+		restartbutton.on('InputSelect', bind(this, function () {
+
+			this.emit('results:restart');
+
+		}));
+
+		menubutton.on('InputSelect', bind(this, function () {
+
+			this.emit('results:menu');
+
+		}));
+
+	};
+
+	this.setHeadline = function (score, monster) {
+
+		this.names = ['CRACKHEAD', 'DOPEFIEND', 'DRUGBEAST'];
+		this.moves = ['SPRINTS', 'RUNS', 'SCAMPERS'];
+		this.distances = ['METERS', 'FATHOMS', 'PARSECS'];
+
+		var r1 = math.random(0,this.names.length);
+		var r2 = math.random(0,this.moves.length);
+		var r3 = math.random(0,this.distances.length);
+
+
+		this.headline.setText(this.names[r1] + " " + this.moves[r2] + " " + score + " " + this.distances[r3] + " FROM " + monster);
+
+	}
+
 });

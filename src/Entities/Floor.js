@@ -1,22 +1,22 @@
-import device;
+import device, animate;
 
-import ui.View;
-import ui.ImageView;
+import ui.View, ui.ImageView;
 
-import src.Entities.FloorTile as FloorTile
 
-exports = Class(ui.View, function (supr) {
+var floorTiles = new Array();
+
+exports = Class(ui.ImageView, function (supr) {
 
 	this.init = function (opts) {
 
 		opts = merge(opts, {
 
-			height:300,
-			width:device.width,
-			x:0,
-			y:device.height - 300,
-			backgroundColor: '#37B34A',
-			canHandleEvents: false
+			height: 230,
+			width: device.width,
+			x: 0,
+			image: "resources/scene/" + opts.scene + "/floor.png",
+			canHandleEvents: false,
+			clip: true,
 
 		});
 
@@ -24,24 +24,17 @@ exports = Class(ui.View, function (supr) {
 
 		this.build();
 
+
 	};
 
 	this.build = function() {
-		var that = this;
-		var i, floorTiles = new Array();
-
-		for(i = 0; i < 4; i++) {
-
-			floorTiles[i] = new FloorTile({x:300 * i});
-
-			this.addSubview(floorTiles[i]);
-
-		}
-
-		// var floorTile = new FloorTile({});
-
-		// this.addSubview(floorTile);
-
+		
 	};
+
+	this.changeScene = function (scene) {
+
+		this.setImage("resources/scene/" + scene + "/floor.png");
+
+	}
 
 });

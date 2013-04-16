@@ -1,45 +1,43 @@
-import device;
+import device, animate math.util as math;
 
-import ui.View;
-import ui.SpriteView as SpriteView;
+import ui.ImageView;
 
-exports = Class(ui.View, function (supr) {
+exports = Class(ui.ImageView, function (supr) {
 
 	this.init = function (opts) {
 
 		opts = merge(opts, {
 
-			height:100,
-			width:100,
-			x:100,
-			y:device.height - 390,
-			canHandleEvents: false
+			image: "resources/chaser/croc.png",
+			x:-50,
+			autoSize: true,
+			anchorX: 0,
+			anchorY: 70,
 
 		});
 
 		supr(this, 'init', [opts]);
 
-		// console.log([opts]);
-
-		this.build(opts.character);
+		this.build();
 
 	};
 
-	this.build = function(character) {
+	this.build = function() {
+		var that = this;
 
-		var sprite = new SpriteView({
+		animate(this).now(this.goof);
 
-			superview: this,
-			autoStart:true,
-			x: 0,
-			y: 0,
-			width: 100,
-			height: 100,
-			url: 'resources/runners/' + character + '/' + character,
-			frameRate: 30,
-			defaultAnimation: "run"
+	};
 
-		});
+	this.change = function(monster) {
+
+		this.setImage("resources/chaser/" + monster + ".png");
+
+	};
+
+	this.goof = function() {
+
+		animate(this).clear().now({ r: -0.2 }, 500).then({ r: 0.5 }, 500).then(this.goof);
 
 	};
 

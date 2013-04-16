@@ -1,7 +1,6 @@
 import device;
 
-import ui.View;
-import ui.ImageView;
+import ui.View, ui.ImageView;
 
 exports = Class(ui.View, function (supr) {
 
@@ -13,40 +12,47 @@ exports = Class(ui.View, function (supr) {
 
 			height:device.height,
 			width:device.width / 2,
-			x:xPos
+			x:xPos,
+			zIndex:100
 
 		});
 
+		this.side = opts.side;
+
 		supr(this, 'init', [opts]);
-
-		// console.log(opts.side);
-
-		this.build(opts);
+		this.build();
+		
 
 	};
 
-	this.build = function(opts) {
-
-		var xPos = (opts.side === 'left') ? 50 : device.width / 2 - 150;
-
-		var blockSelectIcon = new ui.ImageView({
-			superview: this,
-			x:  xPos,
-			y:  device.height - 150,
-			width: 100,
-			height: 100,
-			backgroundColor: "#0f0",
-			canHandleEvents: false
-		});
+	this.build = function() {
 
 		this.on('InputSelect', bind(this, function () {
 
-			var pope = (opts.side === 'left') ? 'left' : 'right';
-
-			console.log(pope);
+			this.emit('blockSelect');
 
 		}));
 
+		this.icon = new ui.ImageView({
+			superview: this,
+			y:  device.height - 150,
+			canHandleEvents: false,
+			height:	94,
+		});
+
 	};
+
+	this.setSelects = function (blockNum) {
+
+		this.icon.setImage("resources/block/select" + blockNum + ".png");
+
+		var width = (blockNum === 1) ? 140 : 94;
+		var xPos = (this.side === 'left') ? 50 : device.width / 2 - width - 50;
+
+		this.icon.updateOpts({ x: xPos, width: width });
+
+		// console.log(blockSelectIcon.getPosition().width);
+
+	}
 
 });

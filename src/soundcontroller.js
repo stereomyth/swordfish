@@ -10,7 +10,7 @@ exports.getSound = function () {
 			path: 'resources/sound',
 			files: {
 				loop: {
-					volume: 0.5,
+					volume: 0.2,
 					background: true,
 					loop: true
 				},
@@ -19,9 +19,18 @@ exports.getSound = function () {
 				},
 				punch: {
 					background: false,
-					volume: 0.5,
+					volume: 0.3,
 				},
 				bulb: {
+					background: false,
+					volume: 0.5,
+				},
+				alien: {
+					background: false,
+					volume: 0.3,
+					loop: true,
+				},
+				boom: {
 					background: false,
 					volume: 0.5,
 				}

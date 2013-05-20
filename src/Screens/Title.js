@@ -64,7 +64,7 @@ exports = Class(ui.ImageView, function (supr) {
 
 			superview: this,
 			image: "resources/images/pill-man.png",
-			x: 695,
+			x: 745,
 			y: 400,
 			autoSize: true,
 			scale: 2,
@@ -77,7 +77,7 @@ exports = Class(ui.ImageView, function (supr) {
 
 			superview: this,
 			image: "resources/images/arrow.png",
-			x: 520,
+			x: 550,
 			y: 470,
 			autoSize: true,
 
@@ -87,7 +87,7 @@ exports = Class(ui.ImageView, function (supr) {
 
 			superview: this,
 			image: "resources/images/arrow.png",
-			x: 1110,
+			x: 1210,
 			y: 560,
 			autoSize: true,
 			r: 3.142,

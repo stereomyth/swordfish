@@ -34,19 +34,19 @@ exports = Class(ui.ImageView, function (supr) {
 		var menubutton = new ui.View({
 
 			superview: this,
-			x: 128,
-			y: 573,
-			width: 120,
-			height: 72,
-			backgroundColor: 'rgba(225,0,0,0.5)',
+			x: 115,
+			y: 575,
+			width: 150,
+			height: 100,
+			// backgroundColor: 'rgba(225,0,0,0.5)',
 
 		});
 
 		this.headline = new ui.TextView({
 
 			superview: this,
-			x: 50,
-			y: 90,
+			x: 130,
+			y: 110,
 			width: 1000,
 			height: 300,
 			size: 260,

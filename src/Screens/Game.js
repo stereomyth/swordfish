@@ -4,6 +4,7 @@ import ui.View, ui.ImageView, ui.TextView;
 
 import src.Entities.Runner as Runner;
 import src.Entities.Chaser as Chaser;
+import src.Entities.Distract as Distract;
 import src.Entities.Floor as Floor, src.Entities.FloorTile as FloorTile;
 import src.Entities.Foreground as Foreground, src.Entities.Background as Background;
 import src.Entities.Scoreboard as Scoreboard;
@@ -25,7 +26,7 @@ exports = Class(ui.View, function (supr) {
 		this.sound = soundcontroller.getSound();
 
 		this.scenes = ['1','2','3','4','5','6','7','8'], this.scene, this.score;
-		this.chasers = ['croc','shark','saw','crab'], this.monster;
+		this.chasers = ['croc','shark','saw','crab'], this.monster, this.distracting = false;
 		this.startSpeed = 50;
 		this.tiles = [], this.gLevel = device.height - 230, 
 		this.character = 'man', this.leftChoice, this.rightChoice;
@@ -83,8 +84,17 @@ exports = Class(ui.View, function (supr) {
 		// this.scoreTimer = setInterval(bind(this, this.updateScore), 100);
 		this.speedTimer = setInterval(bind(this, this.increaseSpeed), 5000);
 		this.sceneTimer = setInterval(bind(this, this.changeScene), 30000);
+		this.distractTimer = setInterval(bind(this, this.spawnDistract ), 4000);
+
+		if(this.distracting) {
+			this.distracting = false;
+			this.distract.removeFromSuperview();
+			
+		} 
 
 		this.sound.play('loop');
+
+		// this.spawnDistract();
 
 	}
 
@@ -110,6 +120,7 @@ exports = Class(ui.View, function (supr) {
 				// clearInterval(that.scoreTimer);
 				clearInterval(that.speedTimer);
 				clearInterval(that.sceneTimer);
+				clearInterval(that.distractTimer);
 				// console.log("yep death");
 			});
 
@@ -173,7 +184,7 @@ exports = Class(ui.View, function (supr) {
 		this.chaser = new Chaser({ y: this.gLevel - 320 });
 
 		this.addSubview( this.background );
-		this.addSubview( this.scoreboard );
+		// this.addSubview( this.scoreboard );
 		this.addSubview( this.foreground );
 		this.addSubview( this.floor );
 		this.addSubview( this.chaser );
@@ -268,6 +279,25 @@ exports = Class(ui.View, function (supr) {
 		this.sound.play('bulb');
 
 		animate(this.white).now({ opacity: 1 }, 200).then({ opacity: 0 }, 500);
+
+	}
+
+	this.spawnDistract = function () {
+
+		if(!this.distracting) {
+
+			var r = math.random(0,20);
+
+			if (r === 4) {
+
+				this.distracting = true;
+				this.distract = new Distract();
+				this.addSubview( this.distract );
+				this.sound.play('alien');
+				
+			} 
+
+		}
 
 	}
 
